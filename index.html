@@ -4,24 +4,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>האתר הראשון שלי</title>
+  <script>
+    try {
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.dataset.theme = "dark";
+      }
+    } catch {
+      // The switch still works when browser storage is unavailable.
+    }
+  </script>
   <style>
+    :root {
+      color-scheme: light;
+      --background: #F8DDE5;
+      --surface: #ffffff;
+      --text: #18261D;
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --background: #181a20;
+      --surface: #272b34;
+      --text: #f5f5f5;
+    }
+    * { box-sizing: border-box; }
     body {
-    background: #F8DDE5;
+      background: var(--background);
       font-family: Arial, sans-serif;
       display: grid;
       place-items: center;
       min-height: 100vh;
       margin: 0;
-      color: #18261D;
+      color: var(--text);
+      padding: 88px 16px 24px;
     }
     main {
-      background: white;
-      padding: 48px;
+      background: var(--surface);
+      padding: clamp(24px, 6vw, 48px);
       border-radius: 24px;
-      width: min(80%, 580px);
+      width: min(100%, 676px);
       box-shadow: 0 12px 35px #00000015;
     }
-    h1 { font-size: 48px; }
+    h1 { font-size: clamp(32px, 8vw, 48px); }
     p { line-height: 1.8; }
     button {
       background: #C8ED92;
@@ -32,9 +55,19 @@
       cursor: pointer;
       font-size: 16px;
     }
+    button:focus-visible {
+      outline: 3px solid var(--text);
+      outline-offset: 4px;
+    }
+    #theme-toggle {
+      position: absolute;
+      inset-block-start: 16px;
+      inset-inline-end: 16px;
+    }
   </style>
 </head>
 <body>
+  <button id="theme-toggle" type="button" aria-pressed="false">מצב כהה</button>
   <main>
     <small>MY FIRST WEBSITE / 2026</small>
     <h1>שלום, עולם!</h1>
@@ -44,6 +77,27 @@
     <button onclick="changeText()">לחץ עליי</button>
   </main>
   <script>
+    const themeToggle = document.getElementById("theme-toggle");
+
+    function updateThemeToggle() {
+      const isDark = document.documentElement.dataset.theme === "dark";
+      themeToggle.textContent = isDark ? "מצב בהיר" : "מצב כהה";
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+    }
+
+    themeToggle.addEventListener("click", () => {
+      const theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = theme;
+      try {
+        localStorage.setItem("theme", theme);
+      } catch {
+        // Keep the current page usable even when storage is blocked.
+      }
+      updateThemeToggle();
+    });
+
+    updateThemeToggle();
+
     function changeText() {
       document.getElementById("message").textContent =
         "זה עובד! יצרת כפתור אינטראקטיבי.";
