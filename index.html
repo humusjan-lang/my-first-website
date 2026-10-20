@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>האתר הראשון שלי</title>
+  <style>
+    body {
+      background: #EFEDE5;
+      font-family: Arial, sans-serif;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      margin: 0;
+      color: #18261D;
+    }
+    main {
+      background: white;
+      padding: 48px;
+      border-radius: 24px;
+      width: min(80%, 580px);
+      box-shadow: 0 12px 35px #00000015;
+    }
+    h1 { font-size: 48px; }
+    p { line-height: 1.8; }
+    button {
+      background: #C8ED92;
+      color: #18261D;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 24px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <small>MY FIRST WEBSITE / 2026</small>
+    <h1>שלום, עולם!</h1>
+    <p id="message">
+      זה האתר הראשון שלי. בניתי אותו ב-GitHub.
+    </p>
+    <button onclick="changeText()">לחץ עליי</button>
+  </main>
+  <script>
+    function changeText() {
+      document.getElementById("message").textContent =
+        "זה עובד! יצרת כפתור אינטראקטיבי.";
+    }
+  </script>
+</body>
+</html>
